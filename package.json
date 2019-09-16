@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
+    "run-android": "react-native run-android",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
     "react": "16.8.6",
-    "react-native": "0.60.5"
+    "react-native": "0.60.5",
+    "react-native-elements": "^1.2.0",
+    "react-native-vector-icons": "^6.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
