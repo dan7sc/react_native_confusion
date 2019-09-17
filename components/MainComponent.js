@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Menu from './MenuComponent';
 import DishDetail from './DishdetailComponent';
 import Home from './HomeComponent';
-import { View, Platform, Button } from 'react-native';
+import { View, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer, SafeAreaView } from 'react-navigation';
