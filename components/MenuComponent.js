@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import DISHES from '../shared/dishes.js';
+import DISHES from '../shared/dishes';
 
 
 class Menu extends Component {
