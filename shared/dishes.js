@@ -1,4 +1,4 @@
-export const DISHES =
+export default DISHES =
     [
         {
         id: 0,
