@@ -9,13 +9,13 @@ export const fetchComments = () => (dispatch) => {
                 return response;
             }
             else {
-                const error = new Error('Error ' + response.status + ': ' + response);
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
                 error.response = response;
                 throw error;
             }
         },
         error => {
-            const errMess = new Error(error.message)
+            var errMess = new Error(error.message)
             throw errMess;
         })
         .then(response => response.json())
@@ -43,13 +43,13 @@ export const fetchDishes = () => (dispatch) => {
                 return response;
             }
             else {
-                const error = new Error('Error ' + response.status + ': ' + response);
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
                 error.response = response;
                 throw error;
             }
         },
         error => {
-            const errMess = new Error(error.message)
+            var errMess = new Error(error.message)
             throw errMess;
         })
         .then(response => response.json())
@@ -80,13 +80,13 @@ export const fetchPromotions = () => (dispatch) => {
                 return response;
             }
             else {
-                const error = new Error('Error ' + response.status + ': ' + response);
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
                 error.response = response;
                 throw error;
             }
         },
         error => {
-            const errMess = new Error(error.message)
+            var errMess = new Error(error.message)
             throw errMess;
         })
         .then(response => response.json())
@@ -117,13 +117,13 @@ export const fetchLeaders = () => (dispatch) => {
                 return response;
             }
             else {
-                const error = new Error('Error ' + response.status + ': ' + response);
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
                 error.response = response;
                 throw error;
             }
         },
         error => {
-            const errMess = new Error(error.message)
+            var errMess = new Error(error.message)
             throw errMess;
         })
         .then(response => response.json())
