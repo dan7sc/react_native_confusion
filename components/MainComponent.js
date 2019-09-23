@@ -258,6 +258,21 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
+        Favorites: {
+            screen: FavoritesNavigator,
+            navigationOptions: {
+                title: 'My Favorites',
+                drawerLabel: 'My Favorites ',
+                drawerIcon: ({ tintColor }) => (
+                    <Icon
+                        name='heart'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
         Reservation: {
             screen: ReservationNavigator,
             navigationOptions: {
@@ -273,21 +288,6 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
-        Favorites: {
-            screen: FavoritesNavigator,
-            navigationOptions: {
-                title: 'My Favorites',
-                drawerLabel: 'My Favorites ',
-                drawerIcon: ({ tintColor }) => (
-                    <Icon
-                        name='heart'
-                        type='font-awesome'
-                        size={24}
-                        color={tintColor}
-                    />
-                )
-            }
-        }
     },
     {
         drawerBackgroundColor: '#d1c4e9',
