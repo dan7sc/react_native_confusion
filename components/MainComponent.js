@@ -6,6 +6,7 @@ import About from './AboutComponent';
 import Contact from './ContactComponent';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoriteComponent';
+import Login from './LoginComponent';
 import { Text, View, ScrollView, Platform, Image, StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
@@ -175,6 +176,29 @@ const FavoritesNavigator = createStackNavigator(
     }
 );
 
+const LoginNavigator = createStackNavigator(
+    {
+        Login: {
+            screen: Login
+        }
+    },
+    {
+        defaultNavigationOptions: ({ navigation }) => ({
+            headerStyle: {
+                backgroundColor: '#512da8'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon name='menu' size={24}
+                color='white'
+                onPress={() => navigation.toggleDrawer()}
+                />
+        })
+    }
+);
+
 const CustomDrawerContentComponent = (props) => {
     return(
         <ScrollView>
@@ -198,6 +222,21 @@ const CustomDrawerContentComponent = (props) => {
 
 const MainNavigator = createDrawerNavigator(
     {
+        Login: {
+            screen: LoginNavigator,
+            navigationOptions: {
+                title: 'Login',
+                drawerLabel: 'Login',
+                drawerIcon: ({ tintColor }) => (
+                    <Icon
+                        name='sign-in'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
         Home: {
             screen: HomeNavigator,
             navigationOptions: {
@@ -290,6 +329,7 @@ const MainNavigator = createDrawerNavigator(
         },
     },
     {
+        initialRouteName: 'Home',
         drawerBackgroundColor: '#d1c4e9',
         contentComponent: CustomDrawerContentComponent
     }
