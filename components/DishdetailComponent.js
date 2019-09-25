@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList, Modal, StyleSheet, Button, Alert, PanResponder } from 'react-native';
+import { View, Text, ScrollView, FlatList, Modal, StyleSheet, Button, Alert, PanResponder, Share } from 'react-native';
 import { Card, Icon, Input, Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -33,7 +33,7 @@ function RenderDish(props) {
     };
 
     const recognizeComment = ({moveX, moveY, dx, dy}) => {
-        if (dx < 300 && dx > 100)
+        if (dx > 200)
             return true;
         else
             return false;
@@ -67,12 +67,23 @@ function RenderDish(props) {
                     { cancelable: false }
                 )
             }
-            if (recognizeComment(gestureState)) {
+            else if (recognizeComment(gestureState)) {
                 props.toggleModal();
             }
             return true;
         }
     });
+
+    const shareDish = (title, message, url) => {
+        Share.share({
+            title: title,
+            message: title + ': ' + message + ' ' + url,
+            url: url
+        },
+        {
+            dialogTitle: 'Share ' + title
+        });
+    }
 
     if (dish != null) {
         return (
@@ -89,7 +100,7 @@ function RenderDish(props) {
                     <View style={styles.formRow}>
                         <Icon
                             raised
-                            reversed
+                            reverse
                             name={props.favorite ? 'heart' : 'heart-o'}
                             type='font-awesome'
                             color='#f50'
@@ -97,11 +108,19 @@ function RenderDish(props) {
                         />
                         <Icon
                             raised
-                            reversed
+                            reverse
                             name={'pencil'}
                             type='font-awesome'
                             color='#512da8'
                             onPress={() => props.toggleModal()}
+                        />
+                        <Icon
+                            raised
+                            reverse
+                            name={'share'}
+                            type='font-awesome'
+                            color='#512da8'
+                            onPress={() => shareDish(dish.name, dish.description, baseUrl + dish.image)}
                         />
                     </View>
                 </Card>
