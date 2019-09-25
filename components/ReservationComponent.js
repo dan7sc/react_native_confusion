@@ -69,7 +69,7 @@ class Reservation extends Component {
         if (permission.status !== 'granted') {
             permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
             if (permission.status !== 'granted') {
-                Aler.alert('Permission not granted to show notifications');
+                Alert.alert('Permission not granted to show notifications');
             }
         }
         return permission;
