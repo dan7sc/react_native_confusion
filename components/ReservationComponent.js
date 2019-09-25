@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Alert } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import * as Animatable from 'react-native-animatable';
+import PushNotification from 'react-native-push-notification';
+import * as Permissions from 'expo-permissions';
 
 
 class Reservation extends Component {
@@ -26,7 +28,32 @@ class Reservation extends Component {
 
     handleReservation() {
         console.log(JSON.stringify(this.state));
-        this.toggleModal();
+        const message = 'Number of Guests: ' + this.state.guests + '\n' +
+                      'Smoking? ' + this.state.smoking + '\n' +
+                      'Date and Time: ' + this.state.date;
+
+        Alert.alert(
+            'Your Reservation OK?',
+            message,
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => {
+                        console.log('Reservation Cancelled');
+                        this.resetForm();
+                    },
+                    style:'cancel'
+                },
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        this.presentLocalNotification(this.state.date);
+                        this.resetForm();
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
     }
 
     resetForm() {
@@ -37,6 +64,31 @@ class Reservation extends Component {
         });
     }
   
+    async obtainNotificationPermission() {
+        let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                Aler.alert('Permission not granted to show notifications');
+            }
+        }
+        return permission;
+    }
+
+    async presentLocalNotification(date) {
+        await this.obtainNotificationPermission();
+
+        PushNotification.localNotification({
+            title: 'Your Reservation',
+            message: 'Reservation for ' + date + ' requested',
+            playSound: true,
+            android: {
+                vibrate: true,
+                color: '#512da8'
+            }
+        });
+    }
+
     render() {
         return(
             <Animatable.View animation='zoomIn' duration={2000} delay={1000} >
@@ -92,27 +144,7 @@ class Reservation extends Component {
                     </View>
                     <View style={styles.formRow}>
                         <Button
-                            // onPress={() => this.handleReservation()}
-                            onPress={() => {
-                                Alert.alert(
-                                    'Your Reservation OK?',
-                                    'Number of Guests: ' + this.state.guests + '\n' +
-                                    'Smoking? ' + this.state.smoking + '\n' +
-                                    'Date and Time: ' + this.state.date,
-                                    [
-                                        {
-                                            text: 'Cancel',
-                                            onPress: () => this.resetForm(),
-                                            style:'cancel'
-                                        },
-                                        {
-                                            text: 'OK',
-                                            onPress: () => this.resetForm()
-                                        }
-                                    ],
-                                    { cancelable: false }
-                                )
-                            }}
+                            onPress={() => this.handleReservation()}
                             title="Reserve"
                             color="#512da8"
                             accessibilityLabel="Learn more about this purple button" />
