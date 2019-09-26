@@ -4,6 +4,7 @@ import DatePicker from 'react-native-datepicker'
 import * as Animatable from 'react-native-animatable';
 import PushNotification from 'react-native-push-notification';
 import * as Permissions from 'expo-permissions';
+import * as Calendar from 'expo-calendar';
 
 
 class Reservation extends Component {
@@ -54,6 +55,8 @@ class Reservation extends Component {
             ],
             { cancelable: false }
         );
+
+        this.addReservationToCalendar(this.state);
     }
 
     resetForm() {
@@ -87,6 +90,39 @@ class Reservation extends Component {
                 color: '#512da8'
             }
         });
+    }
+
+    async obtainCalendarPermission() {
+        let permission = await Permissions.getAsync(Permissions.CALENDAR);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.CALENDAR);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to show calendar');
+            }
+        }
+        return permission;
+    }
+
+    async addReservationToCalendar({date}) {
+        await this.obtainCalendarPermission();
+
+        const start = Date.parse(date);
+        const startTime = new Date(start);
+        const end = (2 * 60 * 60 * 1000) + Date.parse(date)
+        const endTime = new Date(end); 
+
+        Calendar.DEFAULT = '1';
+
+        Calendar.createEventAsync(
+            Calendar.DEFAULT,
+            {
+                title: 'Con Fusion Table Reservation',
+                startDate: startTime,
+                endDate: endTime,
+                timeZone: 'Asia/Hong_Kong',
+                location: '121'
+            }
+        );
     }
 
     render() {
