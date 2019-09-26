@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, ToastAndroid } from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 import { Input, Icon, CheckBox, Button } from 'react-native-elements';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
